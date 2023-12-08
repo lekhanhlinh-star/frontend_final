@@ -66,9 +66,8 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, setcurrentchatinfo, ...rest }: SidebarProps) => {
-    const toast = useToast()
-
     const [curchat, setcurchat] = useState<CurChat[]>([])
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -77,28 +76,44 @@ const SidebarContent = ({ onClose, setcurrentchatinfo, ...rest }: SidebarProps) 
                     headers: {
                         'Content-Type': 'application/json', 'authorization': `Bearer ${token}`,
                     }
-                }).then(respone => {
+                }).then(async respone => {
                     if (respone) {
-                        respone.data.data
+                        await respone.data.data
                             .map((temp: any) => {
                                 var chatid = temp.chatid
                                 temp.users
                                     .map((temp2: any) => {
                                         setcurchat(prevList => [...prevList, {
-                                            currentid: chatid, user: {
+                                            currentid: chatid,
+                                            user: {
                                                 name: temp2.name, id: temp2._id, avt: temp2.profilePic
                                             }
                                         }]);
                                     })
                             });
                     }
+
                 })
+
             } catch {
 
             }
         };
         fetchData();
     }, []);
+
+    const [isset, setisset] = useState(true)
+
+    useEffect(() => {
+        console.log("000")
+        if (isset) {
+            if (curchat.length != 0) {
+                console.log(curchat)
+                setcurrentchatinfo(curchat[0])
+                setisset(false)
+            }
+        }
+    }, [curchat])
 
 
     const handleClick = (link: CurChat) => {
@@ -117,8 +132,6 @@ const SidebarContent = ({ onClose, setcurrentchatinfo, ...rest }: SidebarProps) 
         position={"fixed"}
         overflowX={"hidden"}
         overscrollBehaviorY={"contain"}
-
-        // overscrollBehavior={"none"}
         style={{ transition: "transform 0.3s ease-in-out" }}
 
         {...rest}>

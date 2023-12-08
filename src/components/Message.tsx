@@ -10,12 +10,12 @@ import {
     Text,
     useColorModeValue
 } from "@chakra-ui/react";
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ListMessage from "./Chat/ListMessage";
-import {Head_Chat} from "./Chat/Head_Chat";
+import { Head_Chat } from "./Chat/Head_Chat";
 import axios from "axios";
 import socketIOClient from 'socket.io-client';
-import {IoIosSend} from "react-icons/all";
+import { IoIosSend } from "react-icons/all";
 import Message_bar from "./Chat/Message_bar";
 
 interface Mess {
@@ -25,8 +25,8 @@ interface Mess {
 }
 
 interface User {
-    name: string|null;
-    avt: string ;
+    name: string | null;
+    avt: string;
     id: string;
 }
 
@@ -51,7 +51,7 @@ export function Message() {
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
 
-const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const userid = localStorage.getItem("_id")
 
     const userdata: userData = {
@@ -135,7 +135,7 @@ const [loading, setLoading] = useState(false);
                 if (message && currentchatinfo) {
                     socket.emit('new message', {
                         chat: {
-                            users: [{_id: currentchatinfo?.user.id}]
+                            users: [{ _id: currentchatinfo?.user.id }]
                         }, sender: userdata, content: message
                     });
                     socket.emit("stop typing", currentchatinfo?.user.id);
@@ -223,48 +223,44 @@ const [loading, setLoading] = useState(false);
 
 
     return (
-            <Flex
-                bgGradient={useColorModeValue("linear(to-l,white,white)", "linear(to-l,#05020b,#34073d)")} overflow={"hidden"}
+        <Flex
+            bgGradient={useColorModeValue("linear(to-l,white,white)", "linear(to-l,#05020b,#34073d)")} overflow={"hidden"}
+        >
+            <Message_bar></Message_bar>
+            <ListMessage setcurrentchatinfo={setcurrentchatinfo} />
+
+
+
+            <Box
+
+                box-shadow="-3px 0px 15px 0px #0000001A"
+                borderLeft={"100px"}
+                borderColor={"red"}
+                bg='#FFFFFF'
+                // maxW={"9000px"}
+                width={"100%"}
+            // minWidth={"70%"}
+
             >
-
-
-
-                        <Message_bar></Message_bar>
-
-
-                <ListMessage setcurrentchatinfo={setcurrentchatinfo}/>
-
-
-
-                <Box
-
-                    box-shadow="-3px 0px 15px 0px #0000001A"
-                    borderLeft={"100px"}
-                    borderColor={"red"}
-                    bg='#FFFFFF'
-                    // maxW={"9000px"}
-                    width={"100%"}
-                        // minWidth={"70%"}
-
+                <Head_Chat name={currentchatinfo?.user.name}></Head_Chat>
+                <Flex
+                    direction="column"
+                    minWidth={"100%"}
+                    h="89vh"
+                    // w={"162vh"}
+                    boxSizing={"border-box"}
+                    marginTop={5}
                 >
-                    <Head_Chat name={currentchatinfo?.user.name}></Head_Chat>
-                    <Flex
-                        direction="column"
-                        minWidth={"100%"}
-                        h="89vh"
-                        // w={"162vh"}
-                        boxSizing={"border-box"}
-                        marginTop={5}
+
+                    <Stack bg="#ffffff" flex="100%" overflowY="scroll" ref={containerRef}
                     >
 
-                        <Stack bg="#ffffff" flex="100%"  overflowY="scroll" ref={containerRef}
-                        >
+                        <Flex direction="column">
 
-                            <Flex direction="column">
-
-                                {currentmess.map((message, index) => (<>
-                                    { message.sender === 1 ? <></>: <Avatar h={"56px"} w={"56px"} ml={"50px"} mb={"10px"} src={"http://localhost:5000/uploads/1700656445602.png"}></Avatar> }
-                                    <Box
+                            {currentmess.map((message, index) => (<>
+                                {message.sender === 1 ? <></> :
+                                    <Avatar h={"56px"} w={"56px"} ml={"50px"} mb={"10px"} src={`http://localhost:5000/uploads/${currentchatinfo?.user.avt}`}></Avatar>}
+                                <Box
 
                                     key={index} // Don't forget to include a unique key for each item in the map function
                                     bg={message.sender === 1 ? "#F5DFFF" : "rgba(84,73,243,0.85)"}
@@ -280,52 +276,52 @@ const [loading, setLoading] = useState(false);
                                     maxW="45%"
                                 >
 
-                                    <Text fontFamily={"Montserrat"} lineHeight={"30px"}  fontWeight={"400"}>
+                                    <Text fontFamily={"Montserrat"} lineHeight={"30px"} fontWeight={"400"}>
                                         {message.content}
                                     </Text>
                                 </Box>
-                                </>))}
+                            </>))}
 
 
-                                {isTyping ? (<div>
-                                    <Text>typing</Text>
+                            {isTyping ? (<div>
+                                <Text>typing</Text>
 
-                                    </div>) : (<></>)}
-                            </Flex>
+                            </div>) : (<></>)}
+                        </Flex>
 
-                        </Stack>
+                    </Stack>
 
-                        <Box bg="white" flex="10%" pt={5} >
-                            <Flex alignItems={"center"}>
+                    <Box bg="white" flex="10%" pt={5} >
+                        <Flex alignItems={"center"}>
 
 
-                                <FormControl onKeyDown={handleclick}
+                            <FormControl onKeyDown={handleclick}
+                            >
+
+
+                                <Input borderRadius={"40px"} placeholder={"Type a Message"}
+                                    mx={5} h={"65"} onChange={typingHandler}
+                                    minW={"70%"}
+                                    w={"50%"}
+                                    value={message}
+
+                                    color={"black"}
+                                    mb={"70px"}
                                 >
-
-
-                                    <Input borderRadius={"40px"} placeholder={"Type a Message"}
-                                           mx={5} h={"65"} onChange={typingHandler}
-                                           minW={"70%"}
-                                           w={"50%"}
-                                           value={message}
-
-                                           color={"black"}
-                                           mb={"70px"}
-                                    >
-                                    </Input>
-                                </FormControl>
+                                </Input>
+                            </FormControl>
 
 
 
 
-                            </Flex>
-                        </Box>
-                    </Flex>
+                        </Flex>
+                    </Box>
+                </Flex>
 
-                </Box>
+            </Box>
 
 
-            </Flex>
+        </Flex>
 
 
 

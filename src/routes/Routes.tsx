@@ -12,7 +12,6 @@ import NotFound from "../pages/NotFound/NotFound";
 import { PostWithComment } from "../components/PostwithComment";
 import { Explore } from "../components/Explore";
 import { Message } from "../components/Message";
-import {SocketTest}from "../components/test/SocketTest";
 const Routes = () => {
     const token = useAuth();
 
@@ -33,10 +32,6 @@ const Routes = () => {
     {
         path: "*", element: <NotFound />,
     },
-
-        {
-            path: "/test/:id" ,element: <SocketTest/>
-        }
 
     ];
 
@@ -60,10 +55,10 @@ const Routes = () => {
             path: "/message", element: <Message />,
 
         },
- {
-        path: "/post/:id",
-        element: <PostWithComment />,
-    },
+        {
+            path: "/post/:id",
+            element: <PostWithComment />,
+        },
 
         ],
     },];
