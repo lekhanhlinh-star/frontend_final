@@ -9,10 +9,12 @@ export const Tabnav_profile = () => {
     const [postListComment, setpostListComment] = useState([] as any[]);
     const [activeTab, setActiveTab] = useState(0);
     const token = localStorage.getItem("token");
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiEndpoints = ['http://localhost:5000/api/v1/posts/postOfMe?limit=5&page=', 'http://localhost:5000/api/v1/posts/replyOfMe?limit=5&page='
+                    const apiEndpoints = [`${host_server}/api/v1/posts/postOfMe?limit=5&page=`, `${host_server}/api/v1/posts/replyOfMe?limit=5&page=`
 
                 ];
                 const response = await axios.get(`${apiEndpoints[activeTab]}${offset}`, {

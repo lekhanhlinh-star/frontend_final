@@ -66,9 +66,10 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({onClose, ...rest}: SidebarProps) => {
     const navigate = useNavigate()
     const toast = useToast()
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     const handelLogout = async () => {
-        await axios.post("http://localhost:5000/api/v1/users/logout").then(res => {
+        await axios.post(`${host_server}/api/v1/users/logout`).then(res => {
             console.log(res)
             localStorage.removeItem('token');
             toast({

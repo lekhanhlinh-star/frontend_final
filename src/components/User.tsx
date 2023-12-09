@@ -12,6 +12,7 @@ interface ProfileInfo {
 }
 export default function User(props: ProfileInfo) {
 
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
 
     return (
@@ -42,7 +43,7 @@ export default function User(props: ProfileInfo) {
                                 bgGradient: useColorModeValue("linear(to-l,#05020b,#34073d)", "linear(to-l, #7928CA, #FF0080)")
                             }}
                         >
-                            <Avatar src={"http://127.0.0.1:5000/uploads/" + props.profilePic} mr={5}></Avatar>
+                            <Avatar src={"${host_server}/uploads/" + props.profilePic} mr={5}></Avatar>
                             <Text fontSize={"20px"}> {props.firstName + " " + props.lastName} </Text>
 
 

@@ -44,11 +44,11 @@ const CoverPicClient = (props: ProfileInfo) => {
     const [isfollow, setisfollow] = useState(false)
     console.log("----loading--");
     const token = localStorage.getItem("token");
-
+    const host_server=process.env.REACT_APP_SERVER_API_URL
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:5000/api/v1/users/${props.id}/follow`,
+                await axios.get(`${host_server}/api/v1/users/${props.id}/follow`,
                     {
                         headers: {
                             "Content-Type": "multipart/form-data", "authorization": `Bearer ${token}`,
@@ -73,7 +73,7 @@ const CoverPicClient = (props: ProfileInfo) => {
             // Perform any necessary post creation logic here
             console.log("token", token);
 
-            await axios.put(`http://localhost:5000/api/v1/users/${props.id}/follow`, {
+            await axios.put(`${host_server}/api/v1/users/${props.id}/follow`, {
                 headers: {
                     "Content-Type": "multipart/form-data", "authorization": `Bearer ${token}`,
                 },
@@ -97,6 +97,7 @@ const CoverPicClient = (props: ProfileInfo) => {
 
 
 
+
     return (
 
 
@@ -116,7 +117,7 @@ const CoverPicClient = (props: ProfileInfo) => {
                 <AspectRatio ratio={16 / 9}>
 
                     <Image
-                        src={"http://localhost:5000/uploads/" + props.coverPhoto}
+                        src={`${host_server}/uploads/` + props.coverPhoto}
                         minWidth="800px" maxWidth="800px" borderRadius={10} minHeight="500px" maxH={"500px"}
 
                     ></Image>
@@ -133,7 +134,7 @@ const CoverPicClient = (props: ProfileInfo) => {
                         <Flex justifyItems={"center-space"} alignItems={"center"}>
 
                             <Avatar size="xl" name="Segun Adebayo"
-                                src={"http://localhost:5000/uploads/" + props.profilePic} />
+                                src={"${host_server}/uploads/" + props.profilePic} />
                             <Heading size="lg">{props.firstName + " " + props.lastName}</Heading>
                         </Flex>
 

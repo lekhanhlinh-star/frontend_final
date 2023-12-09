@@ -95,7 +95,7 @@ function Header(props:ProfileInfo ) {
                 </HStack>
 
                 <WrapItem paddingX={3}>
-                    <Avatar  as={"a"} h={"75px"}  w={"65px"} href='/profile' name={props.firstName} src={"http://127.0.0.1:5000/uploads/"+props.profilePic}/>
+                    <Avatar  as={"a"} h={"75px"}  w={"65px"} href='/profile' name={props.firstName} src={"${host_server}/uploads/"+props.profilePic}/>
                 </WrapItem>
                 <IconButton aria-label={"setting"} icon={<SettingsIcon/>} colorScheme='gray.550'  isRound={true}   onClick={toggleColorMode} >
                      <BreadcrumbLink href='/profile'></BreadcrumbLink>

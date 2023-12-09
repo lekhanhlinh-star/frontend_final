@@ -49,7 +49,8 @@ interface ProfileInfo {
 }
 
 const CoverPicture = () => {
-
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+  
 
     const [loading, setLoading] = useState(false);
     const toast = useToast()
@@ -65,7 +66,7 @@ const CoverPicture = () => {
         // Create a separate function for fetching data
         const fetchProfileInfo = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/v1/users/me", {
+                const response = await axios.get(`${host_server}/api/v1/users/me`, {
                     headers: {
                         "authorization": `Bearer ${token}`,
                     },
@@ -100,7 +101,7 @@ const CoverPicture = () => {
         // console.log("data iamge", data)
 
 
-        await axios.patch("http://localhost:5000/api/v1/users/profilePicture", data, {
+        await axios.patch("${host_server}/api/v1/users/profilePicture", data, {
             headers: {
                 "Content-Type": "multipart/form-data", "authorization": `Bearer ${token}`,
             },
@@ -212,7 +213,7 @@ const CoverPicture = () => {
                 <AspectRatio ratio={16 / 9}>
 
                     <Image
-                        src={"http://localhost:5000/uploads/" + profileinfo?.coverPhoto.filename}
+                        src={"${host_server}/uploads/" + profileinfo?.coverPhoto.filename}
                         minWidth="800px" maxWidth="800px" borderRadius={10} minHeight="500px" maxH={"500px"}
 
 
@@ -282,7 +283,7 @@ const CoverPicture = () => {
 
 
                             <Avatar size="xl" name="Segun Adebayo" onClick={onOpen}
-                                src={"http://localhost:5000/uploads/" + profileinfo?.profilePic.filename} />
+                                src={"${host_server}/uploads/" + profileinfo?.profilePic.filename} />
                             <Heading ml={4} size="lg">{profileinfo?.firstName + " " + profileinfo?.lastName}</Heading>
                         </Flex>
 

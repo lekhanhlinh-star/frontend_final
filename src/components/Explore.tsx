@@ -40,6 +40,8 @@ export function Explore() {
     }, {
         title: "Fashion accessories · Trending", content: "#BVLGARILightUpxZeeNuNew", post: "13.7K posts"
     }]
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+    
     const handleSearch = async () => {
         let option
         if (selectedValue === "users") {
@@ -50,7 +52,7 @@ export function Explore() {
             option = "Post"
         }
 
-        await axios.get(`http://127.0.0.1:5000/api/v1/${selectedValue}?search${option}=${input_search}`)
+        await axios.get(`${host_server}/api/v1/${selectedValue}?search${option}=${input_search}`)
             .then(response => {
                 console.log(response)
                 if (selectedValue === "users") {

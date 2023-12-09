@@ -20,6 +20,7 @@ interface ProfileInfo {
 export function MainScreen(props: ProfileInfo) {
     const [postList, setPostList] = useState([] as any[]);
     const [offset, setOffset] = useState(1);
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +29,7 @@ export function MainScreen(props: ProfileInfo) {
 
                 console.log("token", token);
                 const response = await axios.get(
-                    `http://localhost:5000/api/v1/posts?limit=5&page=${offset}`, {
+                    `${host_server}/api/v1/posts?limit=5&page=${offset}`, {
                     headers: { "Content-Type": "application/json", "authorization": `Bearer ${token}` },
                 }
                 );

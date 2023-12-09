@@ -33,13 +33,15 @@ export const Profile_page_client = () => {
     const [loadTrue, setLoadTrue] = useState(true)
     console.log(id)
 
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         // Create a separate function for fetching data
+     
         const fetchProfileInfo = async () => {
 
-            await axios.get("http://localhost:5000/api/v1/users/" + id.id, {
+                await axios.get(`${host_server}/api/v1/users/` + id.id, {
                 headers: {
                     "authorization": `Bearer ${token}`,
                 },

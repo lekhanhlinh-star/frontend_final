@@ -45,9 +45,10 @@ export function FormEdit(data: any) {
         content: data.data.content, image: File || null,
 
     });
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     const [selectedImage, setSelectedImage] = useState<string>(data?.data?.image[0]?.filename
-        ? `http://127.0.0.1:5000/uploads/${data.data.image[0].filename}`
+        ? `h${host_server}/uploads/${data.data.image[0].filename}`
         : "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg");
 
 
@@ -136,7 +137,7 @@ export function FormEdit(data: any) {
                                 <ModalCloseButton />
                                 <ModalBody>
                                     <Flex>
-                                        <Avatar name={data.data.postedBy.firstName} src={"http://127.0.0.1:5000/uploads/" + data.data["postedBy"].profilePic.filename} />
+                                        <Avatar name={data.data.postedBy.firstName} src={"h${host_server}/uploads/" + data.data["postedBy"].profilePic.filename} />
                                         <Text fontWeight="bold" ml={5} mt={2} fontSize={19} >{data.data.postedBy.firstName} {data.data.postedBy.lastName}</Text>
                                     </Flex>
 

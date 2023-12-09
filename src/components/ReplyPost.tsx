@@ -63,7 +63,7 @@ export function ReplyPost(data: any) {
         const fetchData = async () => {
             try {
                 if (data.data.replyTo) {
-                    await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data.replyTo}`).then(data => {
+                    await axios.get(`${host_server}/api/v1/posts/${data.data.replyTo}`).then(data => {
                         console.log(data.data["data"]["doc"])
                         setdataofreply(data.data["data"]["doc"])
                         setisreply(true)
@@ -80,7 +80,7 @@ export function ReplyPost(data: any) {
 
     const handlelike = (id: number) => {
         console.log(id)
-        axios.put(`http://127.0.0.1:5000/api/v1/posts/${id}/like`);
+        axios.put(`${host_server}/api/v1/posts/${id}/like`);
         const button = document.getElementById(
             id.toString(),
         ) as HTMLInputElement;
@@ -108,7 +108,7 @@ export function ReplyPost(data: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data._id}/like`).then(data => {
+                await axios.get(`${host_server}/api/v1/posts/${data.data._id}/like`).then(data => {
                     if (data && data.data.data.isLiked) {
                         setIslike('blue')
                     }
@@ -208,6 +208,7 @@ export function ReplyPost(data: any) {
         // handlenav(id)
         handlenav(id)
     }
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     // console.log(data.postedBy["profilePic"].filename)
 
@@ -215,7 +216,7 @@ export function ReplyPost(data: any) {
         <CardHeader >
             <Flex letterSpacing={4}>
                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                    <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`http://127.0.0.1:5000/uploads/${data.data.postedBy["profilePic"].filename}`} />
+                    <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`${host_server}/uploads/${data.data.postedBy["profilePic"].filename}`} />
                     <Box>
                         <Heading size='sm'></Heading>
 
@@ -249,7 +250,7 @@ export function ReplyPost(data: any) {
         {
             check_post ? (<Image
                 objectFit='cover'
-                src={`http://127.0.0.1:5000/uploads/${data.data.image[0].filename}`}
+                src={`${host_server}/uploads/${data.data.image[0].filename}`}
             />) : null
         }
 
@@ -281,7 +282,7 @@ export function ReplyPost(data: any) {
 
                         <ModalCloseButton />
                         <ModalBody>
-                            <Avatar name='Segun Adebayo' src={`http://127.0.0.1:5000/uploads/${data.data.postedBy["profilePic"].filename}`} />
+                            <Avatar name='Segun Adebayo' src={`${host_server}/uploads/${data.data.postedBy["profilePic"].filename}`} />
 
                             <Input variant='flushed' placeholder="Enter your reply"
 

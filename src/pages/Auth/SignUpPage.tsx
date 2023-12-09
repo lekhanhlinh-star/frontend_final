@@ -49,10 +49,11 @@ export default function SignUpPage() {
 
         // Perform any necessary validation or processing on the form data
         // ...
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
         try {
             // Make an API call using the fetch function
-            await axios.post('http://localhost:5000/api/v1/users/signup', JSON.stringify(InputBodySignUp), {
+            await axios.post(`${host_server}/api/v1/users/signup`, JSON.stringify(InputBodySignUp), {
                 headers: {
                     'Content-Type': 'application/json',
                 }

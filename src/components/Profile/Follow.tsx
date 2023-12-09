@@ -10,12 +10,13 @@ export function FollowShow(data: any) {
     const [getdatafollowers, setgetdatafollowers] = useState<any[]>([]);
     const [tab, settab] = useState(0);
     console.log(data)
-
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const responsefoing = await axios.get(`http://localhost:5000/api/v1/users/${data.data.id}/following`, {
+                const responsefoing = await axios.get(`${host_server}/api/v1/users/${data.data.id}/following`, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "authorization": `Bearer ${token}`,
@@ -23,7 +24,7 @@ export function FollowShow(data: any) {
                 });
                 setgetdatafollowing(responsefoing.data.data.following.following);
 
-                const responsefoers = await axios.get(`http://localhost:5000/api/v1/users/${data.data.id}/followers`, {
+                const responsefoers = await axios.get(`${host_server}/api/v1/users/${data.data.id}/followers`, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "authorization": `Bearer ${token}`,
@@ -95,7 +96,7 @@ export function FollowShow(data: any) {
 
                                                         }}>
                                                         <Avatar size="lg" mt={1} name={x.firstName}
-                                                            src={`http://localhost:5000/uploads/${x["profilePic"].filename}`} />
+                                                            src={`${host_server}/uploads/${x["profilePic"].filename}`} />
                                                         <Flex ml={5} color="black" direction="column">
                                                             <Text mt={6}>{x.firstName} {x.lastName}</Text>
 
@@ -119,7 +120,7 @@ export function FollowShow(data: any) {
                                                             window.location.reload();
                                                         }} minW={420}>
                                                         <Avatar size="lg" mt={1} name={x.firstName}
-                                                            src={`http://localhost:5000/uploads/${x["profilePic"].filename}`} />
+                                                            src={`${host_server}/uploads/${x["profilePic"].filename}`} />
                                                         <Flex ml={5} color="black" direction="column">
                                                             <Text mt={6}>{x.firstName} {x.lastName}</Text>
 

@@ -26,9 +26,11 @@ export function Home_page() {
          console.log("use Effect")
         const token = localStorage.getItem("token");
         // Create a separate function for fetching data
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+         
         const fetchProfileInfo = async () => {
 
-               await axios.get("http://localhost:5000/api/v1/users/me", {
+               await axios.get(`${host_server}/api/v1/users/me`, {
                     headers: {
                         "authorization": `Bearer ${token}`,
                     },

@@ -25,6 +25,7 @@ export default function ResetPasswordForm() {
     const [passwordReset, setPasswordReset] = useState({
         "password": "", "passwordConfirm": ""
     });
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
@@ -41,7 +42,7 @@ export default function ResetPasswordForm() {
 
 
             console.log("token", token)
-            axios.patch('http://localhost:5000/api/v1/users/resetPassword/' + token, JSON.stringify(passwordReset), {
+            axios.patch(`${host_server}/api/v1/users/resetPassword/` + token, JSON.stringify(passwordReset), {
                 headers: {
                     'Content-Type': 'application/json', // 'authorization': `Bearer ${token}`,
                 },

@@ -36,6 +36,8 @@ export const EditProfileModal = () => {
     const [profileinfo, setProfileinfo] = useState({
         firstName: "", lastName: ""
     });
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+    
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
       setProfileinfo((prevFormDataPost) => ({
@@ -48,7 +50,7 @@ export const EditProfileModal = () => {
         // Create a separate function for fetching data
         const fetchProfileInfo = async () => {
             try {
-                await axios.get("http://localhost:5000/api/v1/users/me", {
+                await axios.get(`${host_server}/api/v1/users/me`, {
                     headers: {
                         "Content-Type": "application/json", "authorization": `Bearer ${token}`,
                     },

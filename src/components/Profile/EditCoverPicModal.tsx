@@ -89,9 +89,11 @@ export const EditCoverPicModal = (data: any) => {
         const data = {
             "coverPhoto": file
         };
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+        
 
 
-        await axios.patch("http://localhost:5000/api/v1/users/coverPicture", data, {
+        await axios.patch(`${host_server}/api/v1/users/coverPicture`, data, {
 
             headers: {
                 "Content-Type": "multipart/form-data", "authorization": `Bearer ${token}`,

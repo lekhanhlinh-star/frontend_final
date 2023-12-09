@@ -41,13 +41,14 @@ export default function Login_page() {
         }));
     }
     const [showPassword, setShowPassword] = useState(false)
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
             event.preventDefault();
 
 
-            await axios.post('http://localhost:5000/api/v1/users/login', JSON.stringify(inputLoginBody), {
+            await axios.post(`${host_server}/api/v1/users/login`, JSON.stringify(inputLoginBody), {
                 headers: {
                     'Content-Type': 'application/json',
 

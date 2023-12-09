@@ -48,6 +48,7 @@ import { PostShare } from "./PostShare.";
 
 
 export default function Post(data: any) {
+    const host_server=process.env.REACT_APP_SERVER_API_URL
     // console.log(data)
     // const cancelRef = React.useRef()
     const cancelRef = useRef<HTMLButtonElement>(null);
@@ -89,7 +90,7 @@ export default function Post(data: any) {
         const fetchData = async () => {
             try {
                 if (data.data.replyTo) {
-                    await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data.replyTo}`).then(data => {
+                    await axios.get(`${host_server}/api/v1/posts/${data.data.replyTo}`).then(data => {
                         setdataofreply(data.data["data"]["doc"])
                         setisreply(true)
 
@@ -111,7 +112,7 @@ export default function Post(data: any) {
         try {
             console.log(data.data.retweetData)
             if (data.data.retweetData) {
-                const response = await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data.retweetData}`, {
+                const response = await axios.get(`${host_server}/api/v1/posts/${data.data.retweetData}`, {
                     headers: {
                         "Content-Type": "application/json", "authorization": `Bearer ${token}`,
                     },
@@ -131,9 +132,10 @@ export default function Post(data: any) {
         getFollowing();
     }, [loading]);
 
+    // const host_server=process.env.REACT_APP_SERVER_API_URL
 
     const handlelike = async (id: number) => {
-        await axios.put(`http://127.0.0.1:5000/api/v1/posts/${id}/like`);
+        await axios.put(`${host_server}/api/v1/posts/${id}/like`);
         const button = document.getElementById(id.toString(),) as HTMLInputElement;
 
 
@@ -156,7 +158,7 @@ export default function Post(data: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data._id}/like`).then(data => {
+                await axios.get(`${host_server}/api/v1/posts/${data.data._id}/like`).then(data => {
 
                     if (data.data.data.isLiked) {
                         setIslike('blue')
@@ -211,7 +213,7 @@ export default function Post(data: any) {
             console.log("onSubmit")
 
             const token = localStorage.getItem("token");
-            await axios.post('http://localhost:5000/api/v1/posts', {
+            await axios.post('${host_server}/api/v1/posts', {
                 content: formDataPost.content, image: formDataPost.image, replyTo: data.data._id,
             }, {
                 headers: {
@@ -236,7 +238,7 @@ export default function Post(data: any) {
     const toast = useToast();
     // -----
     const Deleteclick = async (id: string) => {
-        await axios.delete("http://localhost:5000/api/v1/posts/" + id, {
+        await axios.delete("${host_server}/api/v1/posts/" + id, {
             headers: {
                 "Content-Type": "application/json", "authorization": `Bearer ${token}`,
             },
@@ -285,7 +287,7 @@ export default function Post(data: any) {
 
 
     const handleShare = async (id: string) => {
-        await axios.put(`http://localhost:5000/api/v1/posts/${id}/retweet`, {
+        await axios.put(`${host_server}/api/v1/posts/${id}/retweet`, {
             headers: {
                 "Content-Type": "application/json", "authorization": `Bearer ${token}`,
             },
@@ -314,7 +316,7 @@ export default function Post(data: any) {
                     <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' style={{ cursor: 'pointer' }}>
 
                         <Avatar onClick={Profileclick} style={{ cursor: 'pointer' }} name='Segun Adebayo'
-                            src={`http://127.0.0.1:5000/uploads/${data.data.postedBy["profilePic"].filename}`} />
+                            src={`${host_server}/uploads/${data.data.postedBy["profilePic"].filename}`} />
 
                         <Box>
                             <Heading     textTransform={"capitalize"} size='sm'></Heading>
@@ -389,7 +391,7 @@ export default function Post(data: any) {
             <AspectRatio maxH={"600px"} >
                 <Image
                     objectFit='cover'
-                    src={`http://127.0.0.1:5000/uploads/${data.data.image[0].filename}`}
+                    src={`${host_server}/uploads/${data.data.image[0].filename}`}
                 />
             </AspectRatio>
 
@@ -421,13 +423,13 @@ export default function Post(data: any) {
                 <Modal isOpen={isOpen2} onClose={onClose2}>
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader alignContent={"center"}>Create post</ModalHeader>
+                        <ModalHeader alignContent={"center"}>Create comment</ModalHeader>
                         <form id="2" onSubmit={handleSubmit2}>
 
                             <ModalCloseButton />
                             <ModalBody>
                                 <Avatar name='Segun Adebayo'
-                                    src={`http://127.0.0.1:5000/uploads/${data.data.postedBy["profilePic"].filename}`} />
+                                    src={`${host_server}/uploads/${data.data.postedBy["profilePic"].filename}`} />
 
                                 <Input variant='flushed' placeholder="Enter your reply"
                                     name="content"

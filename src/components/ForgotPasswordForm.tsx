@@ -25,6 +25,8 @@ export default function ForgotPasswordForm() {
     const [email, setEmail] = useState({
         "email": "",
     });
+    const host_server=process.env.REACT_APP_SERVER_API_URL
+    
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         setEmail((prevFormDataPost) => ({
@@ -37,7 +39,7 @@ export default function ForgotPasswordForm() {
             console.log("onSubmit")
 
 
-            axios.post('http://localhost:5000/api/v1/users/forgotPass', JSON.stringify(email), {
+            axios.post(`${host_server}/api/v1/users/forgotPass`, JSON.stringify(email), {
                 headers: {
                     'Content-Type': 'application/json', // 'authorization': `Bearer ${token}`,
                 },

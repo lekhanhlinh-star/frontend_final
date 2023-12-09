@@ -44,7 +44,7 @@ export function PostWithComment() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:5000/api/v1/posts/${id.id}`, {
+                await axios.get(`${host_server}/api/v1/posts/${id.id}`, {
                     headers: {
                         'Content-Type': 'multipart/form-data', 'authorization': `Bearer ${token}`,
                     },
@@ -66,7 +66,7 @@ export function PostWithComment() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:5000/api/v1/posts?replyTo=${id.id}`, {
+                await axios.get(`${host_server}/api/v1/posts?replyTo=${id.id}`, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'authorization': `Bearer ${token}`,
@@ -102,6 +102,7 @@ export function PostWithComment() {
     console.log("main_post")
 
     console.log(comment)
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
 
 
@@ -118,7 +119,7 @@ export function PostWithComment() {
                         <CardHeader >
                             <Flex letterSpacing={4}>
                                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                    <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`http://127.0.0.1:5000/uploads/${main_post.postedBy["profilePic"]?.filename}`} />
+                                    <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`${host_server}/uploads/${main_post.postedBy["profilePic"]?.filename}`} />
                                     <Box>
                                         <Heading size='sm'></Heading>
 
@@ -144,7 +145,7 @@ export function PostWithComment() {
                                 minW={"400px"}
                                 minH={"400px"}
                                 objectFit='cover'
-                                src={`http://127.0.0.1:5000/uploads/${main_post.image[0]?.filename}`}
+                                src={`${host_server}/uploads/${main_post.image[0]?.filename}`}
                             />
                         )}
                         <CardFooter
@@ -174,7 +175,7 @@ export function PostWithComment() {
                         <Card >
                             <Flex ml={5} margin={5} letterSpacing={4} >
 
-                                <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`http://127.0.0.1:5000/uploads/${main_post.postedBy["profilePic"]?.filename}`} />
+                                <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`${host_server}/uploads/${main_post.postedBy["profilePic"]?.filename}`} />
                                 <Input ml={5} minH={45} ></Input>
                                 <Button marginLeft={2} minH={45} minW={20} flex='1' variant='ghost' >
                                     Post
@@ -190,7 +191,7 @@ export function PostWithComment() {
                                     <Avatar
                                         style={{ cursor: 'pointer' }}
                                         name='Segun Adebayo'
-                                        src={`http://127.0.0.1:5000/uploads/${commentItem.postedBy["profilePic"]?.filename}`}
+                                        src={`${host_server}/uploads/${commentItem.postedBy["profilePic"]?.filename}`}
                                     />
 
                                     <Flex direction="column" marginLeft={5}>

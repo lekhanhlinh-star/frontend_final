@@ -32,6 +32,8 @@ interface CurChat {
 }
 
 export default function ListMessage({ setcurrentchatinfo }: any) {
+
+
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (<Flex bg={useColorModeValue("#ffffff", 'gray.900')}
         minW={"450px"}
@@ -67,13 +69,13 @@ interface SidebarProps extends BoxProps {
 
 const SidebarContent = ({ onClose, setcurrentchatinfo, ...rest }: SidebarProps) => {
     const toast = useToast()
-
+    const host_server=process.env.REACT_APP_SERVER_API_URL
     const [curchat, setcurchat] = useState<CurChat[]>([])
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
-                await axios.get(`http://127.0.0.1:5000/api/v1/chats`, {
+                await axios.get(`${host_server}/api/v1/chats`, {
                     headers: {
                         'Content-Type': 'application/json', 'authorization': `Bearer ${token}`,
                     }

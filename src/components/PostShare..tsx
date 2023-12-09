@@ -47,6 +47,8 @@ export function PostShare(data: any) {
     catch {
 
     }
+        const host_server=process.env.REACT_APP_SERVER_API_URL
+
 
     var like_count = data.data.likes.length
     if (like_count == 0) {
@@ -62,7 +64,7 @@ export function PostShare(data: any) {
         const fetchData = async () => {
             try {
                 if (data.data.replyTo) {
-                    await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data.replyTo}`).then(data => {
+                    await axios.get(`${host_server}/api/v1/posts/${data.data.replyTo}`).then(data => {
                         console.log(data.data["data"]["doc"])
                         setdataofreply(data.data["data"]["doc"])
                         setisreply(true)
@@ -79,7 +81,7 @@ export function PostShare(data: any) {
 
     const handlelike = (id: number) => {
         console.log(id)
-        axios.put(`http://127.0.0.1:5000/api/v1/posts/${id}/like`);
+        axios.put(`${host_server}/api/v1/posts/${id}/like`);
         const button = document.getElementById(
             id.toString(),
         ) as HTMLInputElement;
@@ -107,7 +109,7 @@ export function PostShare(data: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:5000/api/v1/posts/${data.data._id}/like`).then(data => {
+                await axios.get(`${host_server}/api/v1/posts/${data.data._id}/like`).then(data => {
                     if (data && data.data.data.isLiked) {
                         setIslike('blue')
                     }
@@ -168,7 +170,7 @@ export function PostShare(data: any) {
             console.log(`id is ${data.data._id}`)
 
 
-            axios.post('http://localhost:5000/api/v1/posts', {
+            axios.post(`${host_server}/api/v1/posts`, {
                 content: formDataPost.content,
                 image: formDataPost.image,
                 replyTo: data.data._id,
@@ -216,14 +218,14 @@ export function PostShare(data: any) {
         {
             check_post ? (<Image
                 objectFit='cover'
-                src={`http://127.0.0.1:5000/uploads/${data.data.image[0].filename}`}
+                src={`${host_server}/uploads/${data.data.image[0].filename}`}
             />) : null
         }
 
         <CardHeader >
             <Flex letterSpacing={4}>
                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                    <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`http://127.0.0.1:5000/uploads/${data.data.postedBy["profilePic"].filename}`} />
+                    <Avatar style={{ cursor: 'pointer' }} name='Segun Adebayo' src={`${host_server}/uploads/${data.data.postedBy["profilePic"].filename}`} />
                     <Box>
                         <Heading size='sm'></Heading>
 

@@ -117,6 +117,7 @@ export function Formpost(props: ProfileInfo) {
         }
 
     };
+        const host_server=process.env.REACT_APP_SERVER_API_URL
 
 
     return (<>
@@ -125,7 +126,7 @@ export function Formpost(props: ProfileInfo) {
 
             <Flex borderRadius={"10px"} pt={5}>
                 <Center ml={5}>
-                    <Avatar as={"a"} href="/profile" name={props.firstName} src={"http://127.0.0.1:5000/uploads/" + props.profilePic} />
+                    <Avatar as={"a"} href="/profile" name={props.firstName} src={`${host_server}/uploads/` + props.profilePic} />
                 </Center>
 
                 <Center>
@@ -140,7 +141,7 @@ export function Formpost(props: ProfileInfo) {
 
                                 <ModalCloseButton />
                                 <ModalBody>
-                                    <Avatar name={props.firstName} src={"http://127.0.0.1:5000/uploads/" + props.profilePic} />
+                                    <Avatar name={props.firstName} src={"${host_server}/uploads/" + props.profilePic} />
 
 
                                     <Input variant="flushed" placeholder="What's on your mind now ?"

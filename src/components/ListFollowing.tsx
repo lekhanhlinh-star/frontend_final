@@ -68,11 +68,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     const [DataFollow, setDataFollow] = useState([] as any[]);
     // const LinkItems: Array<any> = []
     const [loading, setLoading] = useState(true);
+    const host_server=process.env.REACT_APP_SERVER_API_URL
 
     const getFollowing = useCallback(async () => {
         try {
             const token=localStorage.getItem("token")
-            const response = await axios.get("http://localhost:5000/api/v1/users/me",
+            const response = await axios.get(`${host_server}/api/v1/users/me`,
                 {
                 headers: {
                         'Content-Type': 'multipart/form-data', 'authorization': `Bearer ${token}`,
