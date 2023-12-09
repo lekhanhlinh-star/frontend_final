@@ -10,12 +10,12 @@ import {
     Text,
     useColorModeValue
 } from "@chakra-ui/react";
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ListMessage from "./Chat/ListMessage";
-import {Head_Chat} from "./Chat/Head_Chat";
+import { Head_Chat } from "./Chat/Head_Chat";
 import axios from "axios";
 import socketIOClient from 'socket.io-client';
-import {IoIosSend} from "react-icons/all";
+import { IoIosSend } from "react-icons/all";
 import Message_bar from "./Chat/Message_bar";
 
 interface Mess {
@@ -25,8 +25,8 @@ interface Mess {
 }
 
 interface User {
-    name: string|null;
-    avt: string ;
+    name: string | null;
+    avt: string;
     id: string;
 }
 
@@ -67,25 +67,11 @@ const [loading, setLoading] = useState(false);
             setSocketConnected(true)
         });
 
-        // const handleNewMessage = (newMessageRecieved: any) => {
-        //    if (String(currentchatinfo?.user.id) == String(newMessageRecieved.sender._id)) {
-        //         console.log("asdasdnaskj")
-        //         setcurrentmess((prevMessages) =>
-        //             [...prevMessages, {
-        //                 content: newMessageRecieved.content,
-        //                 sender: 0
-        //             }]);
-        //     }
-        //     else {
-        //         console.log(newMessageRecieved)
-        //         const element = document.getElementById(newMessageRecieved.sender._id);
-        //         if (element?.textContent == "") {
-        //             element.textContent = 'New message';
-        //             element.style.color = 'red';
-        //         }
-        //     }
-        // };
-        // socket.on('message received', handleNewMessage);
+        const handleNewMessage = (newMessage: any) => {
+            console.log("message received")
+            setcurrentmess((prevMessages) => [...prevMessages, newMessage]);
+        };
+        socket.on('message received', handleNewMessage);
 
         const handleTyping = () => {
             console.log("--------------------------------------")
@@ -100,7 +86,7 @@ const [loading, setLoading] = useState(false);
 
         return () => {
             console.log("disconnected")
-            // socket.removeListener('message received', handleNewMessage);
+            socket.removeListener('message received', handleNewMessage);
             socket.removeListener('typing', handleTyping);
             socket.removeListener('stop typing', handleStopTyping);
             socket.disconnect();
@@ -111,22 +97,19 @@ const [loading, setLoading] = useState(false);
     useEffect(() => {
         socket.on("message recieved", (newMessageRecieved) => {
             console.log(newMessageRecieved)
-
-
-
-            if (currentchatinfo?.user.id ===    newMessageRecieved.sender._id) {
+            if (currentchatinfo?.user.id === newMessageRecieved.sender._id) {
                 setcurrentmess([...currentmess, {
                     content: newMessageRecieved.content, sender: 0
                 }]);
 
             }
             else {
-                // console.log(newMessageRecieved)
-                // const element = document.getElementById(newMessageRecieved.sender._id);
-                // if (element?.textContent == "") {
-                //     element.textContent = 'New message';
-                //     element.style.color = 'red';
-                // }
+                console.log(newMessageRecieved)
+                const element = document.getElementById(newMessageRecieved.sender._id);
+                if (element?.textContent == "") {
+                    element.textContent = 'New message';
+                    element.style.color = 'red';
+                }
             }
 
 
@@ -185,7 +168,6 @@ const [loading, setLoading] = useState(false);
         }
 
     }
-    const host_server=process.env.REACT_APP_SERVER_API_URL
 
 
     useEffect(() => {
@@ -193,7 +175,7 @@ const [loading, setLoading] = useState(false);
 
             try {
                 setLoading(true)
-                if (currentchatinfo) await axios.get(`${host_server}/api/v1/messages/${currentchatinfo.currentid}`).then(data => {
+                if (currentchatinfo) await axios.get(`http://127.0.0.1:5000/api/v1/messages/${currentchatinfo.currentid}`).then(data => {
                     if (data) {
                         setcurrentmess(data.data.data.arr)
                         setLoading(false);
@@ -205,9 +187,7 @@ const [loading, setLoading] = useState(false);
         };
 
         fetchData();
-        console.error("chat info",currentchatinfo)
-    }, [currentchatinfo?.user.id]);
-
+    }, [currentchatinfo]);
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -307,11 +287,11 @@ const [loading, setLoading] = useState(false);
                                 </>))}
 
 
-                                {/*{isTyping ? (<div>*/}
-                                {/*    <Text>typing</Text>*/}
+                            {isTyping ? (<div>
+                                <Text>typing</Text>
 
-                                {/*    </div>) : (<></>)}*/}
-                            </Flex>
+                            </div>) : (<></>)}
+                        </Flex>
 
                         </Stack>
 
